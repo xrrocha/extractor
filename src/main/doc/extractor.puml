@@ -1,0 +1,42 @@
+@startuml
+
+together {
+    interface CicloVida {
+        void abrir()
+        void cerrar()
+    }
+
+    interface Extractor {
+        Map<String, Object> extraer()
+    }
+
+    interface Formateador {
+        String formatear(Map<String, Object>)
+    }
+
+    interface Diseminador {
+        void grabar(String linea)
+    }
+}
+
+together {
+    class Extraccion {
+        ---
+        + ejecutar()
+    }
+    class ExtractorSQL
+    class FormateadorCSV
+    class ServidorFTP
+}
+
+Extraccion -> Extractor
+Extraccion -> Formateador
+Extraccion -> Diseminador
+
+ExtractorSQL ..|> Extractor
+ExtractorSQL ..|> CicloVida
+FormateadorCSV ..|> Formateador
+ServidorFTP ..|> Diseminador
+ServidorFTP ..|> CicloVida
+
+@enduml
